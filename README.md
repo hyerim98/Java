@@ -25,7 +25,7 @@ class Person implements Comparable{
 		return name + " " + height;
 	}
 
-// Person을 height를 기준으로 내림차순 정렬
+        // Person을 height를 기준으로 내림차순 정렬
 	@Override
 	public int compareTo(Object o) {
 		Person p = (Person)o;
@@ -33,7 +33,7 @@ class Person implements Comparable{
 	}
 }
 ```   
-* Comparator : 자바에서 제공하는 기본 class(String 등)를 대상으로 정렬 기준을 바꿔야하는 상황에서 사용하는 인터페이스    
+* Comparator : 자바에서 제공하는 기본 class(String 등)를 대상으로 정렬 기준을 바꿔야하는 상황에서 사용하는 인터페이스(정의한 class에도 사용가능)    
 ```
 class HeightOrderComparator implements Comparator<Person>{
 // Person 클래스를 height를 기준으로 오름차순 정렬
