@@ -1,4 +1,49 @@
-# Java   
+# Java  
+
+## Comparable & Comparator   
+* Comparable : 정의한 class의 인스턴스의 필드 중 특정 필드를 기준으로 정렬하기 위한 인스턴스의 비교 기준을 정의하는 인터페이스   
+```
+class Person implements Comparable{
+	private String name;
+	private int height;
+	
+	public Person(String name, int height) {
+		this.name = name;
+		this.height = height;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public String getName() {
+		return name;
+	}
+	
+	@Override
+	public String toString() {
+		return name + " " + height;
+	}
+
+// Person을 height를 기준으로 내림차순 정렬
+	@Override
+	public int compareTo(Object o) {
+		Person p = (Person)o;
+		return p.height - this.height;
+	}
+}
+```   
+* Comparator : 자바에서 제공하는 기본 class(String 등)를 대상으로 정렬 기준을 바꿔야하는 상황에서 사용하는 인터페이스    
+```
+class HeightOrderComparator implements Comparator<Person>{
+// Person 클래스를 height를 기준으로 오름차순 정렬
+	@Override
+	public int compare(Person o1, Person o2) {
+		return o1.getHeight() - o2.getHeight();
+	}
+	
+}
+```
 
 ## 컬렉션 프레임워크   
 ### List   
