@@ -26,6 +26,7 @@
     * class의 인스턴스들은 새로운 객체를 생성할 때마다 참조값이 달라지므로 중복 저장이 된다.   
     * 그러므로 2개의 메소드를 적절하게 오버라이딩을 하여 class의 인스턴스 데이터도 중복되면 저장이 되지 않도록 해야한다
     ```
+    // Person class에는 name, age 필드가 존재
     @Override
     public int hashCode() {
         return Objects.hash(name, age);
