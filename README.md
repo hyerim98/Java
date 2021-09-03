@@ -200,5 +200,123 @@ class DefinedStack {
  
  ### Map   
  * HashMap
- * TreeMap : 정렬 상태를 유지한다(정렬 기준 : key)
+ * TreeMap : 정렬 상태를 유지한다(정렬 기준 : key)   
+
+## 네스티드 클래스   
+### 멤버 클래스   
+```
+interface Printable {
+    void print();   
+}
+
+class Papers {
+    private String con;
+
+    public Papers(String s) {
+        con = s;
+    }
+
+    public Printable getPrinter() {
+        return new Printer();
+    }
+
+    private class Printer implements Printable {
+        public void print() {
+            System.out.println(con);
+        }
+    }
+}
+
+class UseMemberInner {
+    public static void main(String[] args) {
+        Papers p = new Papers("서류 내용: 행복합니다.");
+        Printable prn = p.getPrinter();
+        prn.print();
+    }
+}
+```  
+
+### 로컬 클래스
+```
+interface Printable {
+    void print();   
+}
+
+class Papers {
+    private String con;
+    public Papers(String s) { con = s; }
+
+    public Printable getPrinter() {
+        class Printer implements Printable {
+            public void print() { System.out.println(con); }
+        }
+        
+        return new Printer();
+    }
+}
+
+class UseLocalInner {
+    public static void main(String[] args) {
+        Papers p = new Papers("서류 내용: 행복합니다.");
+        Printable prn = p.getPrinter();
+        prn.print();
+    }
+}
+```   
+
+## 익명 클래스   
+```
+class AnonymousComparator {
+    public static void main(String[] args) {
+        List<String> list = new ArrayList<>();
+        list.add("ROBOT");
+        list.add("APPLE");
+        list.add("BOX");
+        
+        Comparator<String> cmp = new Comparator<String>() {
+            @Override
+            public int compare(String s1, String s2) {
+                return s1.length() - s2.length();
+            }
+        };
+
+        Collections.sort(list, cmp);
+        System.out.println(list);
+    }
+}
+```   
+## 람다   
+```
+interface Printable {
+    void print(String s);
+}
+
+class Lambda3 {
+    public static void main(String[] args) {
+    
+    	// 익명 클래스
+    	Printable prn = new Printable() {
+            public void print(String s) {
+                System.out.println(s);
+            }
+        };
+	
+	// 람다
+        Printable prn = (s) -> { System.out.println(s); };
+        prn.print("What is Lambda?");
+}
+```   
+### 람다 매개변수 전달
+```
+public static void ShowString(Printable p, String s) {
+      p.print(s);
+}
+
+public static void main(String[] args) {
+      ShowString((s) -> { System.out.println(s); }, "What is Lambda?");
+}
+```
+    
+
+
  
