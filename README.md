@@ -202,7 +202,7 @@ class DefinedStack {
  * HashMap
  * TreeMap : 정렬 상태를 유지한다(정렬 기준 : key)   
 
-## 네스티드 클래스   
+## 네스티드 클래스와 람다      
 ### 멤버 클래스   
 ```
 interface Printable {
@@ -308,6 +308,10 @@ class Lambda3 {
 ```   
 ### 람다 매개변수 전달
 ```
+interface Printable {
+    void print(String s);
+}
+
 public static void ShowString(Printable p, String s) {
       p.print(s);
 }
@@ -315,8 +319,9 @@ public static void ShowString(Printable p, String s) {
 public static void main(String[] args) {
       ShowString((s) -> { System.out.println(s); }, "What is Lambda?");
 }
-```
-    
+```   
+
+
 
 
  
