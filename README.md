@@ -320,6 +320,77 @@ public static void main(String[] args) {
       ShowString((s) -> { System.out.println(s); }, "What is Lambda?");
 }
 ```   
+## 정의되어 있는 함수형 인터페이스   
+### Predicate   
+전달된 인자를 판단하여 T/F를 반환해야 하는 상황일 때 사용   
+```
+public static <T> void show(Predicate<T> p, List<T> list) {
+	for(T n : list) {
+		if(p.test(n)) {
+			System.out.print(n + " ");
+		}
+	}
+	System.out.println();
+}
+
+public static void main(String[] args) {
+	List<Integer> lst1 = Arrays.asList(1,3,8,10,11);
+	show(n -> n%2 != 0, lst1); // 홀수만 출력
+		
+	List<Double> lst2 = Arrays.asList(-1.2, 3.5, -2.4, 9.5);
+	show(n -> n > 0.0, lst2); // 0보다 큰 수만 출력
+
+}
+```   
+### Supplier   
+단순히 무엇인가를 반환해야 할 때 사용   
+```
+class SupplierDemo {
+    public static List<Integer> makeIntList(Supplier<Integer> s, int n) {
+        List<Integer> list = new ArrayList<>();    
+        for(int i = 0; i < n; i++)
+            list.add(s.get());
+        return list;
+    }
+    
+    public static void main(String[] args) {
+        Supplier<Integer> spr = () -> {
+            Random rand = new Random();
+            return rand.nextInt(50);
+        };
+
+        List<Integer> list = makeIntList(spr, 5);
+        System.out.println(list);
+
+        list = makeIntList(spr, 10);
+        System.out.println(list);
+    }
+}
+```   
+### Consumer   
+전달된 인자를 가지고 어떤 결과를 보여야 할 때 사용   
+```
+class ConsumerDemo {
+    public static void main(String[] args) {
+        Consumer<String> c = s -> System.out.println(s);
+        
+        c.accept("Pineapple");    // 출력이라는 결과를 보임
+        c.accept("Strawberry");
+    }
+}
+```   
+### Fuction   
+전달 인자와 반환 값이 모두 존재할 때 사용   
+```
+class FunctionDemo {
+    public static void main(String[] args) {
+        Function<String, Integer> f = s -> s.length();
+
+        System.out.println(f.apply("Robot"));
+        System.out.println(f.apply("System"));
+    }
+}
+```
 
 
 
