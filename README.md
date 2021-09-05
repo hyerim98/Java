@@ -498,7 +498,99 @@ class MyFirstStream2 {
         System.out.println(str); // Robot
     }
 }
+```   
+## 스트림2   
+* flatMap
 ```
+class GradeAverage2 {
+    public static void main(String[] args) {
+        ReportCard[] cards = {
+            new ReportCard(70, 80, 90),
+            new ReportCard(90, 80, 70),
+            new ReportCard(80, 80, 80)
+        };       
+
+        Arrays.stream(cards) // ReportCard 인스턴스로 이루어진 스트림 생성
+           .flatMapToInt(r -> IntStream.of(r.getKor(), r.getEng(), r.getMath())) // flatMap을 이용하여 학생들의 국,영,수 점수로 이루어진 스트림 생성
+           .average() // 최종 연산
+           .ifPresent(avg -> System.out.println("avg. " + avg));        
+     }
+}
+```   
+* 중간 연산   
+```
+// 정렬 Stream<T> sorted(Comparator<? super T> comparator)
+IntStream.of(3, 9, 4, 2)
+            .sorted()
+            .forEach(d -> System.out.print(d + "\t"));
+	    
+	 
+// 루핑 (최종연산인 forEach의 중간연산 버전 : forEach - 반환형이 void, peek - 반환형이 void가 아니다)
+IntStream.of(5, 3, 1)
+            .peek(d -> System.out.print(d + "\t"))
+            .sum(); 
+```   
+* 최종 연산   
+```
+class OpIntStream {
+    public static void main(String[] args) {
+        // 합
+        int sum = IntStream.of(1, 3, 5, 7, 9)
+                          .sum();
+        System.out.println("sum = " + sum);
+
+        // 개수
+        long cnt = IntStream.of(1, 3, 5, 7, 9)
+                          .count();
+        System.out.println("count = " + cnt);
+
+        // 평균
+        IntStream.of(1, 3, 5, 7, 9)
+                .average()
+                .ifPresent(av -> System.out.println("avg = " + av));
+
+        // 최소
+        IntStream.of(1, 3, 5, 7, 9)
+                .min()
+                .ifPresent(mn -> System.out.println("min = " + mn));
+
+        // 최대
+        IntStream.of(1, 3, 5, 7, 9)
+                .max()
+                .ifPresent(mx -> System.out.println("max = " + mx));
+		
+		
+	// MatrchStream	
+	boolean b = IntStream.of(1, 2, 3, 4, 5)
+                          .allMatch(n -> n%2 == 0);
+        System.out.println("모두 짝수이다. " + b);
+
+        b = IntStream.of(1, 2, 3, 4, 5)
+                    .anyMatch(n -> n%2 == 0);
+        System.out.println("짝수가 하나는 있다. " + b);
+
+        b = IntStream.of(1, 2, 3, 4, 5)
+                    .noneMatch(n -> n%2 == 0);
+        System.out.println("짝수가 하나도 없다. " + b);
+	
+	
+	// collect
+	String[] words = {"Hello", "Box", "Robot", "Toy"};
+        Stream<String> ss = Arrays.stream(words);
+        
+        List<String> ls = ss.filter(s -> s.length() < 5)
+                          .collect(
+                              () -> new ArrayList<>(), // 데이터를 저장할 저장소를 생성
+                              (c, s) -> c.add(s), // c - 컬렉션 인스턴스, s - 스트림을 이루는 데이터들
+                              (lst1, lst2) -> lst1.addAll(lst2)); // 순차 스트림이라면 의미가 없는 람다식(병렬 스트림이라면 저장소에 담긴 데이터들을 하나로 묶는 과정)
+    
+        System.out.println(ls);
+ 
+    }
+}
+```
+
+
 
 
 
