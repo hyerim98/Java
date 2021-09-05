@@ -390,7 +390,80 @@ class FunctionDemo {
         System.out.println(f.apply("System"));
     }
 }
+```   
+
+## Optional  
+* if문 대체
 ```
+public void ifPresent(Consumer<? super T> consumer)
+```
+```
+class StringOptional2 {
+    public static void main(String[] args) {
+        Optional<String> os1 = Optional.of(new String("Toy1")); // NULL값 허용 안됨
+        Optional<String> os2 = Optional.ofNullable(new String("Toy2")); // NULL값 허용됨
+
+        // 람다식 버전 : 내용물이 os1에 존재한다면, 인자가 전달되면서 accept 메소드가 호출된다.
+        os1.ifPresent(s -> System.out.println(s));
+
+        // 메소드 참조 버전
+        os2.ifPresent(System.out::println);
+    }
+}
+```   
+
+* if~else문 대체   
+1. map은 Optional로 감싸서 값을 반환한다   
+```
+class OptionalOrElse {
+    public static void main(String[] args) {
+        Optional<String> os1 = Optional.empty();
+        Optional<String> os2 = Optional.of("So Basic");
+
+        String s1 = os1.map(s -> s.toString()) // 인스턴스가 존재한다면
+                       .orElse("Empty"); // 인스턴스가 존재하지 않다면
+
+        String s2 = os2.map(s -> s.toString())
+                       .orElse("Empty");
+
+        System.out.println(s1);
+        System.out.println(s2);
+    }
+}
+```   
+2. flatMap은 Optional 인스턴스를 클래스의 멤버로 두는 경우에 사용   
+```
+class ContInfo {
+    Optional<String> phone;   // null 일 수 있음
+    Optional<String> adrs;    // null 일 수 있음
+
+    public ContInfo(Optional<String> ph, Optional<String> ad) {
+        phone = ph;
+        adrs = ad;
+    }
+    public Optional<String> getPhone() { return phone; }
+    public Optional<String> getAdrs() { return adrs; }
+}
+
+class FlatMapElseOptional {
+    public static void main(String[] args) {
+        Optional<ContInfo> ci = Optional.of(
+            new ContInfo(Optional.ofNullable(null), Optional.of("Republic of Korea"))
+        );
+        
+        String phone = ci.flatMap(c -> c.getPhone())
+                         .orElse("There is no phone number.");
+
+        String addr = ci.flatMap(c -> c.getAdrs())
+                        .orElse("There is no address.");
+          
+        System.out.println(phone);
+        System.out.println(addr);
+    }
+}
+```   
+
+## 스트림(Stream)
 
 
 
