@@ -464,7 +464,41 @@ class FlatMapElseOptional {
 ```   
 
 ## 스트림(Stream)
+```
+class MyFirstStream2 {
+    public static void main(String[] args) {
+    	// 배열 스트림
+        int[] ar = {1, 2, 3, 4, 5};
 
+        int sum = Arrays.stream(ar) // 스트림 생성
+                        .filter(n -> n%2 == 1) // 중간 연산
+                        .sum(); // 최종 연산
+
+        System.out.println(sum);
+	
+	// 컬렉션 스트림
+	List<String> list = Arrays.asList("Toy", "Robot", "Box");
+        
+        list.stream() // 스트림 생성
+          .map(s -> s.length()) // 중간 연산(String형 스트림 -> Integer형 스트림으로 변환하는 연산작업)
+          .forEach(n -> System.out.print(n + "\t")); // 최종 연산
+        
+	// Reduction
+        BinaryOperator<String> lc = 
+            (s1, s2) -> { 
+               if(s1.length() > s2.length())
+                   return s1;
+               else 
+                   return s2;                   
+            };
+        
+        String str = list.stream()
+                      .reduce("", lc); // 스트림이 빈 경우 빈 문자열 반환
+      
+        System.out.println(str); // Robot
+    }
+}
+```
 
 
 
