@@ -588,8 +588,108 @@ class OpIntStream {
  
     }
 }
-```
+```   
 
+## I/O 스트림   
+* 바이트 스트림   
+```
+// 입력 스트림
+InputStream in = new FileInputStream("경로");
+// 출력 스트림
+OutputStream out = new FileOutputStream("경로");
+```   
+* 바이트 필터 스트림(자바 프로그램 - 필터 스트림 - 바이트 스트림 - 파일) (기본 자료형 데이터를 저장하는 필터)   
+```
+// 입력 필터 스트림
+DataInputStream in = 
+                 new DataInputStream(new FileInputStream("data.dat"));
+		 
+// 출력 필터 스트림
+DataOutputStream out = 
+                 new DataOutputStream(new FileOutputStream("data.dat"));
+```
+* 바이트 버퍼 필터 스트림(자바 프로그램 - 필터 스트림 - 바이트 스트림 - 파일) (버퍼가 꽉 차야 전송됨)   
+```
+// 입력 버퍼 필터 스트림  
+BufferedInputStream in = 
+                   new BufferedInputStream(new FileInputStream(src));
+		   
+// 출력 버퍼 필터 스트림
+BufferedOutputStream out = 
+                   new BufferedOutputStream(new FileOutputStream(dst));
+```
+* 문자 스트림   
+```
+// 문자 입력 스트림
+Reader in = new FileReader("경로");
+// 문자 출력 스트림
+Writer out = new FileWriter("data.txt")
+```   
+* 문자 버퍼 필터 스트림   
+```
+// 입력 문자 버퍼 필터 스트림
+BufferedReader br = new BufferedReader(new FileReader("String.txt"));
+// 출력 문자 버퍼 필터 스트림
+BufferedWriter bw = new BufferedWriter(new FileWriter("String.txt"));
+```
+* 객체 스트림   
+```
+// 입력 객체 스트림
+ObjectInputStream oi = 
+                new ObjectInputStream(new FileInputStream("Object.bin"));
+		
+// 출력 객체 스트림
+ObjectOutputStream oo = 
+                new ObjectOutputStream(new FileOutputStream("Object.bin"));
+```   
+
+## 쓰레드와 동기화   
+```
+class Counter { 
+    int count = 0; 
+
+    public void increment() {
+        synchronized(this) { // 하나의 쓰레드만 접근 가능하도록 동기화 설정
+            count++;
+        }
+    }
+
+    public void decrement() {
+        synchronized(this) { // 하나의 쓰레드만 접근 가능하도록 동기화 설정
+            count--;
+        }
+    }
+
+    public int getCount() { return count; }
+}
+
+class MutualAccess {
+    public static Counter cnt = new Counter();
+
+    public static void main(String[] args) throws InterruptedException {        
+        Runnable task1 = () -> {
+            for(int i = 0; i<1000; i++)
+                cnt.increment();
+        };
+
+        Runnable task2 = () -> {
+            for(int i = 0; i<1000; i++)
+                cnt.decrement();
+        };
+
+        Thread t1 = new Thread(task1);
+        Thread t2 = new Thread(task2);
+        
+        t1.start(); // 쓰레드 시작
+        t2.start();
+    
+        t1.join(); // main 쓰레드가 t1의 쓰레드가 종료될때까지 기다린다
+        t2.join(); // main 쓰레드가 t2의 쓰레드가 종료될때까지 기다린다
+     
+        System.out.println(cnt.getCount());
+    }
+}
+```
 
 
 
