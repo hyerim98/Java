@@ -1,7 +1,9 @@
 {
     "java.project.sourcePaths": [
-        "practice",
+        "wildcard",
         "generics",
-        "wildcard"
+        "collection",
+        "lamda",
+        "stream"
     ]
 }

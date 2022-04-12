@@ -29,10 +29,10 @@ public class Main {
 
 
         System.out.println("--------------------Question 3-----------------------");
-        Box<Integer> b1 = new Box<>();
+        GenericBox<Integer> b1 = new GenericBox<>();
         b1.set(99);
 
-        Box<Integer> b2 = new Box<>();
+        GenericBox<Integer> b2 = new GenericBox<>();
         b2.set(55);
 
         System.out.println(b1.get() + " & " + b2.get());
@@ -43,7 +43,7 @@ public class Main {
     }
 
     // Question3
-    public static <T extends Number> void swapBox(Box<T> b1, Box<T> b2){
+    public static <T extends Number> void swapBox(GenericBox<T> b1, GenericBox<T> b2){
         T tmp = b1.get();
         b1.set(b2.get());
         b2.set(tmp);
