@@ -29,7 +29,7 @@ public class StreamFilterMapping {
                   
         ls.stream()
             .filter(toy -> toy.getModel().length() > 10)
-            .map(m -> m.getModel())
+            .map(ToyPriceInfo::getModel)  // .map(m -> m.getModel())
             .forEach(System.out::println);
                        
     }

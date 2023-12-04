@@ -1,9 +1,12 @@
 {
     "java.project.sourcePaths": [
         "wildcard",
-        "generics",
-        "collection",
+        "stream",
+        "methodReference",
         "lamda",
-        "stream"
+        "generics",
+        "enum",
+        "collection",
+        "optional"
     ]
 }
